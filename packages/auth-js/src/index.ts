@@ -130,6 +130,8 @@ export function authHandler(): MiddlewareHandler {
     }
 
     const res = await Auth(reqWithEnvUrl(c.req.raw, ctxEnv.AUTH_URL), config)
-    return new Response(res.body, res)
+    const headerRecord = Object.fromEntries(res.headers.entries())
+
+    return c.body(res.body, res.status, headerRecord)
   }
 }
